@@ -8,8 +8,8 @@ This Setup Process is for Intellij Software & MySQL Database. Follow below Steps
 Database Setup:
 1. Open "database.txt" and copy all queries.
 2. Run these sql queries in MySQL commandline client.
-3. Open file "DBConnection.java" in "library" folder.
-4. Replace the username and password with your Database one's.
+3. Open file "Methods.java" in "library" folder.
+4. Replace the db connection username and password with your Database one's.
 
 Jar file Setup:
 1. In Intellij, Go to File option > click on Project Structure > Global Libraries.
