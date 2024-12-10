@@ -24,25 +24,52 @@ public class LoginPage extends JFrame {
         setLocationRelativeTo(null);
 
         // Apply global font style
-        AppFont.setGlobalFont(new FontUIResource(new Font("Verdana", Font.PLAIN, 16)));
+        AppFont.setGlobalFont(new FontUIResource(new Font("Verdana", Font.PLAIN, 18)));
         SwingUtilities.updateComponentTreeUI(this);
 
         // Create UI elements
-        JPanel panel = new JPanel(new GridBagLayout());
+        JPanel panel = new JPanel(new GridBagLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon icon = new ImageIcon("./img/light1.png");
+                Image img = icon.getImage();
+                g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        panel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel userLabel = new JLabel("Username:");
-        usernameField = new JTextField(15);
+        userLabel.setForeground(Color.WHITE);
+        userLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        usernameField = new JTextField(20);
+        usernameField.setFont(new Font("Verdana", Font.PLAIN, 16));
+        usernameField.setPreferredSize(new Dimension(200, 30));
+        usernameField.setMargin(new Insets(5, 5, 5, 5));
+
         JLabel passLabel = new JLabel("Password:");
-        passwordField = new JPasswordField(15);
+        passLabel.setForeground(Color.WHITE);
+        passLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+        passwordField = new JPasswordField(20);
+        passwordField.setFont(new Font("Verdana", Font.PLAIN, 16));
+        passwordField.setPreferredSize(new Dimension(200, 30));
+        passwordField.setMargin(new Insets(5, 5, 5, 5));
+
         JButton loginButton = new JButton("Login");
+        loginButton.setBackground(new Color(1, 137, 225));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFont(new Font("Verdana", Font.PLAIN, 18));
+//        loginButton.setFocusPainted(false);
+
         usernameField.setToolTipText("Enter your username");
         passwordField.setToolTipText("Enter your password");
 
         // Set grid bag constraints for each component
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
         panel.add(userLabel, gbc);
 
@@ -67,7 +94,6 @@ public class LoginPage extends JFrame {
         panel.add(loginButton, gbc);
 
         // Add panel to frame
-        panel.setBackground(Color.LIGHT_GRAY);
         add(panel);
         setVisible(true);
 
@@ -78,53 +104,22 @@ public class LoginPage extends JFrame {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 if (validateLogin(username, password)) {
-                    // Create a JOptionPane
-                    JOptionPane pane = new JOptionPane("Successfully Logged In", JOptionPane.INFORMATION_MESSAGE);
-
-                    // Create a dialog with the JOptionPane
-                    JDialog dialog = pane.createDialog("Login Successful");
-
-                    // Set up a timer to dispose the dialog after 2 seconds (2000 milliseconds)
-                    Timer timer = new Timer(1000, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            dialog.dispose();
-                        }
-                    });
-
-                    // Start the timer and show the dialog
-                    timer.setRepeats(false); // Ensure the timer only runs once
-                    timer.start();
-                    dialog.setVisible(true);
-
-                    //JOptionPane.showMessageDialog(null, "Login Successful!");
-                    dispose();
                     new LibraryManagement();
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid Username or Password.");
                 }
             }
         });
+
     }
 
     private boolean validateLogin(String username, String password) {
         // Replace with your actual validation logic
-        return "admin".equals(username) && "123".equals(password);
+        return "admin".equals(username) && "admin".equals(password);
     }
 
     public static void main(String[] args) {
-        try {
-            // Set the Nimbus look and feel
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
